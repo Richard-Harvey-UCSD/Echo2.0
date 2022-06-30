@@ -6,18 +6,39 @@ import {
   Animated,
   TouchableOpacity,
   Image,
+  Alert,
+  useWindowDimensions,
 } from 'react-native';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons';
 import LineSeparator from '../../components/LineSeparator';
+import {useForm} from 'react-hook-form';
+import { Auth } from 'aws-amplify';
 
 function LoginScreen({navigation}) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const onSignInPressed = () => {
-    console.warn('Sign In');
+  const {height} = useWindowDimensions();
+
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm();
+
+  const onSignInPressed = async (data) => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    try{
+      const response = await Auth.signIn(data.username, data.password);
+      console.log(response);
+    } catch(e) {
+      Alert.alert('Oops!', e.message);
+    }
+    setLoading(false);
   };
 
   const onSignUpPressed = () => {
@@ -36,23 +57,30 @@ function LoginScreen({navigation}) {
           source={require('../../../assets/images/Echo.png')}
         />
       </View>
-      <View style={styles.textField}>
-        <CustomInput
-          placeholder={'Username'}
-          value={username}
-          setValue={setUsername}
-        />
-      </View>
-      <View style={styles.textField}>
-        <CustomInput
-          placeholder={'Password'}
-          value={password}
-          setValue={setPassword}
-          secureTextEntry={true}
-        />
-      </View>
+
+      <CustomInput
+        name="username"
+        placeholder={'Username'}
+        control={control}
+        rules={{required: 'Username is required'}}
+      />
+
+      <CustomInput
+        name="password"
+        placeholder={'Password'}
+        secureTextEntry={true}
+        control={control}
+        rules={{
+          required: 'Password is required',
+          minLength: {
+            value: 4,
+            message: 'Password should be minimum 4 characters long',
+          },
+        }}
+      />
+
       <View>
-        <CustomButton onPress={() => navigation.navigate('HomeScreen')} text="LOGIN" />
+        <CustomButton onPress={handleSubmit(onSignInPressed)} text={loading ? 'Loading...' : 'Sign In'} />
         <View style={{alignItems: 'center', flexDirection: 'row'}}>
           <CustomButton
             onPress={() => navigation.navigate('ForgotPassword')}
@@ -93,14 +121,6 @@ const styles = StyleSheet.create({
     width: 200,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  textField: {
-    backgroundColor: '#e6e6e6',
-    width: '90%',
-    borderRadius: 25,
-    flexDirection: 'row',
-    padding: 15,
-    marginTop: 20,
   },
 });
 

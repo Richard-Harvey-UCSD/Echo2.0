@@ -1,31 +1,50 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView, Alert} from 'react-native';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
+import {useForm} from 'react-hook-form';
+import {Auth} from 'aws-amplify';
 
 function ConfirmEmailScreen({navigation}) {
-  const [code, setCode] = useState('');
+  const {control, handleSubmit, watch} = useForm();
 
-  const onSignInPressed = () => {
-    console.warn('Sign In');
+  const username = watch('username');
+
+  const onConfirmPressed = async data => {
+    try {
+      await Auth.confirmSignUp(data.username, data.code);
+      navigation.navigate('LoginScreen');
+    } catch (e) {
+      Alert.alert('Oops!', e.message);
+    }
   };
-  const onResendCodePressed = () => {
-    console.warn('Resent Code');
+  const onResendCodePressed = async () => {
+    try {
+      await Auth.resendSignUp(username);
+      Alert.alert('Success', 'Code was sent to your email');
+    } catch (e) {
+      Alert.alert('Oops!', e.message);
+    }
   };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.text}>
         <Text style={styles.title}>Confirm Your Email</Text>
       </View>
-      <View style={styles.textField}>
-        <CustomInput
-          placeholder={'Enter your confirmation code'}
-          value={code}
-          setValue={setCode}
-        />
-      </View>
+      <CustomInput
+        name="username"
+        placeholder={'Username'}
+        control={control}
+        rules={{required: 'Username is required'}}
+      />
+      <CustomInput
+        name="code"
+        placeholder={'Confirmation code'}
+        control={control}
+        rules={{required: 'Please enter your confirmation code'}}
+      />
       <View>
-        <CustomButton onPress={onSignInPressed} text="Register" />
+        <CustomButton onPress={handleSubmit(onConfirmPressed)} text="Confirm" />
       </View>
       <View style={{flexDirection: 'row'}}>
         <CustomButton
@@ -48,20 +67,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#f0f0f0',
   },
   text: {
     margin: 20,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  textField: {
-    backgroundColor: '#e6e6e6',
-    width: '90%',
-    borderRadius: 25,
-    flexDirection: 'row',
-    padding: 15,
-    marginTop: 20,
   },
   title: {
     fontSize: 24,

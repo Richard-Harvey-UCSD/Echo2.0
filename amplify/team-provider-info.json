@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-echo20-staging-185357-authRole",
+      "UnauthRoleArn": "arn:aws:iam::396523927005:role/amplify-echo20-staging-185357-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::396523927005:role/amplify-echo20-staging-185357-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-echo20-staging-185357-deployment",
+      "UnauthRoleName": "amplify-echo20-staging-185357-unauthRole",
+      "StackName": "amplify-echo20-staging-185357",
+      "StackId": "arn:aws:cloudformation:us-east-1:396523927005:stack/amplify-echo20-staging-185357/aa7f9510-f713-11ec-9987-129988deb823",
+      "AmplifyAppId": "d2cyuvx7uu8t5i"
+    },
+    "categories": {
+      "auth": {
+        "Echo20": {}
+      }
+    }
+  }
+}
