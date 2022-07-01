@@ -13,22 +13,22 @@ import {
 const DATA = [
   {
     id: 1,
-    title: 'Test 1',
+    title: 'Card 1',
     //subtitle: 'This is a test subtitle',
   },
   {
     id: 2,
-    title: 'Test 2',
+    title: 'Card 2',
     //subtitle: 'This is a test subtitle',
   },
   {
     id: 3,
-    title: 'Test 3',
+    title: 'Card 3',
     //subtitle: 'This is a test subtitle',
   },
   {
     id: 4,
-    title: 'Test 4',
+    title: 'Card 4',
     //subtitle: 'This is a test subtitle',
   },
 ];
