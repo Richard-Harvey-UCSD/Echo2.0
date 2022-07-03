@@ -53,12 +53,10 @@ function CardsScreen() {
 
   const renderItem = ({item, index}) => {
     return (
-      <Swipeable renderRightActions={renderRightActions}>
         <TouchableOpacity style={styles.item} onPress={() => onPressItem(item)}>
           <Text style={styles.text}>{item.title}</Text>
           <Text style={styles.subtext}>{item.subtitle}</Text>
         </TouchableOpacity>
-      </Swipeable>
     );
   };
 

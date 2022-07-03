@@ -7,25 +7,32 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Lottie from 'lottie-react-native';
 
 function OnboardingScreen({navigation}) {
   return (
     <SafeAreaView style={styles.buttonContainer}>
       <View style={{flex: 1}}>
-        <Image
+        {/* <Image
           style={{height: 350, width: 350}}
           source={require('../../../assets/images/Echo.png')}
-        />
+        /> */}
       </View>
+        <Lottie
+        style={{marginBottom: 75}}
+          source={require('../../../assets/lf30_editor_y9yahktg.json')}
+          autoPlay
+          loop
+        />
       <TouchableOpacity
         style={styles.loginButton}
         onPress={() => navigation.navigate('LoginScreen')}>
-        <Text style={styles.loginText}>Login</Text>
+        <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.registerButton}
         onPress={() => navigation.navigate('RegisterScreen')}>
-        <Text style={styles.registerText}>Register</Text>
+        <Text style={styles.registerText}>REGISTER</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
