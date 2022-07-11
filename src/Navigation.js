@@ -42,7 +42,7 @@ function Navigation(props) {
   if (user === undefined) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator />
+        <ActivityIndicator color='#000'/>
       </View>
     );
   }

@@ -13,10 +13,12 @@ const Tab = createBottomTabNavigator();
 export default function TabIndex(props) {
   return (
     <Tab.Navigator
+      
       initialRouteName="Cards"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
+          
 
           if (route.name === 'Cards') {
             iconName = focused ? 'ios-albums' : 'ios-albums-outline';
@@ -48,6 +50,7 @@ export default function TabIndex(props) {
         component={EchosScreen}
         options={{
           headerShown: false,
+          
         }}
       />
       <Tab.Screen
